@@ -28,7 +28,8 @@ Steps:
 
 -Containerize your application using Docker, then deploy your function on Google Cloud Functions or Google Cloud Run. Your function should accept a JSON payload with the input text and return a JSON response with the ranked list of similar item URLs.
 
-Our approach: 
+
+**Our approach: **
 Dataset prep:
 1. We get web-scraping APIs for flipkart and amazon.
 2. In flipkart_scraper.py, we create a flipkart dataset from that API for 3 labels, men cloth, women cloth and kid cloth so as to add diversity.
