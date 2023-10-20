@@ -5,6 +5,8 @@ import string
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 import pandas as pd
+import nltk
+nltk.download('stopwords')
 
 def preprocess_text(text):
     # Remove special characters
