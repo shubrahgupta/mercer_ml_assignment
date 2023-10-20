@@ -2,6 +2,9 @@ import pandas as pd
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 import json
+import os
+
+os.environ['CURL_CA_BUNDLE'] = ''
 
 def job(input_json,top_n):
     model = SentenceTransformer('bert-base-nli-mean-tokens')
@@ -13,6 +16,10 @@ def job(input_json,top_n):
     input_text = data["input"]
     emb_text = model.encode(input_text)
 
+    # print("input: ", len(emb_text)," ", emb_text)
+    # print()
+    # print("sentence_: ", len(sentence_embeddings[0])," ", sentence_embeddings)
+
 
 
     similarity_scores = cosine_similarity(
@@ -20,15 +27,22 @@ def job(input_json,top_n):
         sentence_embeddings[0:]
     )
     top_indices = similarity_scores.argsort()[0][-top_n:][::-1]
-    top_urls = [item_urls[idx] for idx in top_indices]
-    ed = json.dumps(top_urls)
-    return ed
+    top_urls = [(item_descriptions[idx], item_urls[idx]) for idx in top_indices]
+    # ed = json.dumps(top_urls)
+    # return ed
+    return top_urls
 
-input_text = "pant"
+print()
+# input_text = input("Enter the product you want: ")
+input_text = "Cotton skirt"
 input_json = {"input":input_text}
-top_n = 5
+print()
+# top_n = int(input("How many top-results you want? : "))
+top_n = 6
 top_urls = job(json.dumps(input_json),top_n)
-print(top_urls)
+print()
+for i in range(len(top_urls)):
+    print(top_urls[i])
 
 
 
